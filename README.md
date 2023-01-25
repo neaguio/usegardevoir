@@ -1,0 +1,1 @@
+Using SWR as dependency, Gardevoir helps you define your routes and map them to specific components with ease.
