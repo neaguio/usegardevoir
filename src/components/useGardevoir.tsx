@@ -1,35 +1,36 @@
-import useSWR from 'swr';
-import { SWRConfiguration } from 'swr';
+import React from 'react'
+import useSWR from 'swr'
+import { SWRConfiguration } from 'swr'
 
-export const fetcher = (url : string) => fetch(url).then(res => res.json());
+const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
-export default function initializeGardevoir(config : { [key:string] : any }){
-    function useGardevoir( api : keyof typeof config,
-        {
-            query = {},
-            customConfig = {}
-        } : {
-            query? : { [key:string] : any };
-            customConfig?: SWRConfiguration } = {}
-    ) {
-        const swrConfigFn = config?.[api];
-    
-        if(typeof swrConfigFn === 'function'){
-            const {url, ...rest} = swrConfigFn(query,customConfig);
-            return createRequest(url,rest);
-        }
-        if(typeof api === 'string') return createRequest(api);
-        
-        throw new Error('The API name does not exist in the configuration.');
-    }
-    return useGardevoir
-}
+export default function GardevoirInitialize(config: { [key: string]: any }) {
+  const findApi = React.useCallback(
+    (
+      api: keyof typeof config,
+      {
+        query = {},
+        customConfig = {},
+      }: {
+        query?: { [key: string]: any }
+        customConfig?: SWRConfiguration
+      } = {},
+    ) => {
+      const swrConfigFn = config?.[api]
 
+      if (typeof swrConfigFn === 'function') {
+        const { url, ...rest } = swrConfigFn(query, customConfig)
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        return useSWR(url, fetcher, {
+          ...rest,
+        })
+      }
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      if (typeof api === 'string') return useSWR(api, fetcher, {})
 
-function createRequest(url : string,rest={}){
-    return useSWR(
-        url,fetcher, {
-            ...rest
-        }
-    )
+      return api
+    },
+    [config],
+  )
+  return findApi
 }
