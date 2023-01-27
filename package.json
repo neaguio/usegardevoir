@@ -1,6 +1,6 @@
 {
   "name": "usegardevoir",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Using SWR as dependency, Gardevoir helps you define your routes and map them to specific components with ease.",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -18,7 +18,6 @@
   "author": "neaguio",
   "license": "MIT",
   "dependencies": {
-    "qs": "^6.11.0",
     "react": ">=16.11.0",
     "react-dom": "^18.2.0",
     "swr": "^2.0.1"
@@ -30,7 +29,6 @@
   "devDependencies": {
     "@testing-library/react": "^13.4.0",
     "@types/jest": "^29.4.0",
-    "@types/qs": "^6.9.7",
     "@types/react": "^18.0.27",
     "@typescript-eslint/eslint-plugin": "^5.49.0",
     "@typescript-eslint/parser": "^5.49.0",
