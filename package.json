@@ -18,8 +18,10 @@
   "author": "neaguio",
   "license": "MIT",
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "qs": "^6.11.0",
+    "react": ">=16.11.0",
+    "react-dom": "^18.2.0",
+    "swr": "^2.0.1"
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,7 @@
   "devDependencies": {
     "@testing-library/react": "^13.4.0",
     "@types/jest": "^29.4.0",
+    "@types/qs": "^6.9.7",
     "@types/react": "^18.0.27",
     "@typescript-eslint/eslint-plugin": "^5.49.0",
     "@typescript-eslint/parser": "^5.49.0",
@@ -47,14 +50,14 @@
     "dist",
     "LICENSE",
     "README.md"
-  ],  
+  ],
   "keywords": [
     "vercel",
     "swr",
     "react",
     "react hook"
-  ],  
+  ],
   "peerDependencies": {
     "react": ">=16.11.0"
-  }  
+  }
 }
