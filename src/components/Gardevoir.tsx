@@ -6,14 +6,14 @@ type SWRConfig = {
 }
 export type GardevoirReturnOptions = SWRConfig & SWRConfiguration
 type QueryOptions = {
-  FetchOptions: { [key: string]: any }
+  FetchOptions?: { [key: string]: any }
   SwrOptions?: SWRConfiguration
 }
 type TypeGardevoirConfig = { [key: string]: (options: QueryOptions) => GardevoirReturnOptions }
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 export default function GardevoirInitialize<T extends TypeGardevoirConfig>(GardevoirConfig: T) {
   const findAPIbyName = React.useCallback(
-    (apiName: keyof T, QueryOptions: QueryOptions) => {
+    (apiName: keyof T, QueryOptions: TypeGardevoirConfig) => {
       const swrConfigFn = GardevoirConfig?.[apiName]
       if (typeof swrConfigFn === 'function') {
         const { url, ...rest } = swrConfigFn(QueryOptions)
