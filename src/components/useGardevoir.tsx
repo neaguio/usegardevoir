@@ -45,14 +45,11 @@ interface SWRConfig {
   [key: string]: any
 }
 
-interface GardevoirInitializeConfig {
-  [key: string]: (query?: { [key: string]: any }, customConfig?: SWRConfiguration) => SWRConfig
-}
 
-export default function GardevoirInitialize(config: GardevoirInitializeConfig) {
+export default function GardevoirInitialize<T extends { [key: string]: (query?: { [key: string]: any }, customConfig?: SWRConfiguration) => SWRConfig }>(config: T) {
   const findApi = React.useCallback(
     (
-      api: keyof GardevoirInitializeConfig,
+      api: keyof T,
       options: { query?: { [key: string]: any }; customConfig?: SWRConfiguration } = {},
     ) => {
       const swrConfigFn = config?.[api]
@@ -69,6 +66,5 @@ export default function GardevoirInitialize(config: GardevoirInitializeConfig) {
     },
     [config],
   )
-
   return findApi
 }
