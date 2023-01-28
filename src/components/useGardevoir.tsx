@@ -1,12 +1,10 @@
 import React from 'react'
 import useSWR from 'swr'
 import type { SWRConfiguration } from 'swr'
-
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
-interface SWRConfig {
+interface SWRConfig extends SWRConfiguration {
   url: string
-  [key: string]: any
 }
 
 type QueryOptionsData = { [key: string]: any }
