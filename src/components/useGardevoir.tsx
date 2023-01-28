@@ -3,18 +3,20 @@ import useSWR from 'swr'
 import type { SWRConfiguration } from 'swr'
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
-interface SWRConfig extends SWRConfiguration {
+interface SWRConfig {
   url: string
 }
+
+type SWRExtendedConfig = SWRConfig & SWRConfiguration
 
 type QueryOptionsData = { [key: string]: any }
 
 interface QueryOptions {
   FetchOptions: QueryOptionsData
-  SwrOptions?: SWRConfiguration
+  SwrOptions?: SWRExtendedConfig
 }
 
-export default function GardevoirInitialize<T extends { [key: string]: (FetchOptions: QueryOptions) => SWRConfig }>(
+export default function GardevoirInitialize<T extends { [key: string]: (FetchOptions: QueryOptions) => SWRExtendedConfig }>(
   ApiConfig: T,
 ) {
   const findAPIbyName = React.useCallback(
