@@ -9,24 +9,32 @@ interface SWRConfig {
   [key: string]: any
 }
 
+type QueryOptionsData = { [key: string]: any };
+
+interface QueryOptions {
+  QueryOptionsData?: QueryOptionsData;
+  FetchOptions?: SWRConfiguration
+}
+
+
 export default function GardevoirInitialize<
-  T extends { [key: string]: (query?: { [key: string]: any }, customConfig?: SWRConfiguration) => SWRConfig },
->(config: T) {
-  const findApi = React.useCallback(
-    (api: keyof T, options: { query?: { [key: string]: any }; customConfig?: SWRConfiguration } = {}) => {
-      const swrConfigFn = config?.[api]
+  T extends { [key: string]: (QueryOptionsData?: QueryOptions) => SWRConfig  },
+>(ApiConfig: T) {
+  const findAPIbyName = React.useCallback(
+    (apiName: keyof T, options: QueryOptions) => {
+      const swrConfigFn = ApiConfig?.[apiName]
 
       if (typeof swrConfigFn === 'function') {
-        const { url, ...rest } = swrConfigFn(options.query, options.customConfig)
+        const { url, ...rest } = swrConfigFn(options)
         // eslint-disable-next-line react-hooks/rules-of-hooks
         return useSWR(url, fetcher, rest)
       }
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      if (typeof api === 'string') return useSWR(api, fetcher, {})
+      if (typeof apiName === 'string') return useSWR(apiName, fetcher, {})
 
-      return api
+      return apiName
     },
-    [config],
+    [ApiConfig],
   )
-  return findApi
+  return findAPIbyName
 }
