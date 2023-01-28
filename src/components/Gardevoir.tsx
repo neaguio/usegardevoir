@@ -13,7 +13,7 @@ type TypeGardevoirConfig = { [key: string]: (options: QueryOptions) => Gardevoir
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 export default function GardevoirInitialize<T extends TypeGardevoirConfig>(GardevoirConfig: T) {
   const findAPIbyName = React.useCallback(
-    (apiName: keyof T, QueryOptions: TypeGardevoirConfig) => {
+    (apiName: keyof T, QueryOptions: QueryOptions) => {
       const swrConfigFn = GardevoirConfig?.[apiName]
       if (typeof swrConfigFn === 'function') {
         const { url, ...rest } = swrConfigFn(QueryOptions)
