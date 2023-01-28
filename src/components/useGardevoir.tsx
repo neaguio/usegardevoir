@@ -3,7 +3,7 @@ import useSWR from 'swr'
 import type { SWRConfiguration } from 'swr'
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
-type SWRConfig {
+type SWRConfig  = {
   url: string
 }
 
