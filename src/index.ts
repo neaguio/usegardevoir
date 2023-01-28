@@ -1,9 +1,5 @@
-// import MyCounter from './components/App'
-
-// export { MyCounter }
-
-import initializeGardevoir from './components/useGardevoir';
-import type { ApiConfig } from './components/useGardevoir';
+import initializeGardevoir from './components/Gardevoir'
+import type { TypeGardevoirConfig } from './components/Gardevoir'
 
 export default initializeGardevoir
-export {ApiConfig}; 
+export { TypeGardevoirConfig }
