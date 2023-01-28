@@ -18,7 +18,9 @@ interface QueryOptions {
 
 export type TypeGardevoirConfig = { [key: string]: (options: QueryOptions) => SWRExtendedConfig }
 
-export default function GardevoirInitialize<T extends TypeGardevoirConfig>(GardevoirConfig: T) {
+export default function GardevoirInitialize<
+  T extends { [key: string]: (FetchOptions: QueryOptions) => SWRExtendedConfig },
+>(GardevoirConfig: T) {
   const findAPIbyName = React.useCallback(
     (apiName: keyof T, QueryOptions: QueryOptions) => {
       const swrConfigFn = GardevoirConfig?.[apiName]
