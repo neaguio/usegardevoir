@@ -1,6 +1,6 @@
 import React from 'react'
 import useSWR from 'swr'
-import { SWRConfiguration } from 'swr'
+import type { SWRConfiguration } from 'swr'
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
@@ -9,23 +9,22 @@ interface SWRConfig {
   [key: string]: any
 }
 
-type QueryOptionsData = { [key: string]: any };
+type QueryOptionsData = { [key: string]: any }
 
 interface QueryOptions {
-  QueryOptionsData?: QueryOptionsData;
-  FetchOptions?: SWRConfiguration
+  FetchOptions: QueryOptionsData
+  SwrOptions: SWRConfiguration
 }
 
-
-export default function GardevoirInitialize<
-  T extends { [key: string]: (QueryOptionsData?: QueryOptions) => SWRConfig  },
->(ApiConfig: T) {
+export default function GardevoirInitialize<T extends { [key: string]: (FetchOptions: QueryOptions) => SWRConfig }>(
+  ApiConfig: T,
+) {
   const findAPIbyName = React.useCallback(
-    (apiName: keyof T, options: QueryOptions) => {
+    (apiName: keyof T, QueryOptions: QueryOptions) => {
       const swrConfigFn = ApiConfig?.[apiName]
 
       if (typeof swrConfigFn === 'function') {
-        const { url, ...rest } = swrConfigFn(options)
+        const { url, ...rest } = swrConfigFn(QueryOptions)
         // eslint-disable-next-line react-hooks/rules-of-hooks
         return useSWR(url, fetcher, rest)
       }
