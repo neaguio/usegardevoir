@@ -13,7 +13,7 @@ type QueryOptionsData = { [key: string]: any }
 
 interface QueryOptions {
   FetchOptions: QueryOptionsData
-  SwrOptions: SWRConfiguration
+  SwrOptions?: SWRConfiguration
 }
 
 export default function GardevoirInitialize<T extends { [key: string]: (FetchOptions: QueryOptions) => SWRConfig }>(
