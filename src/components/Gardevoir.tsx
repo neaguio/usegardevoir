@@ -13,13 +13,13 @@ export type QueryOptions = {
 }
 
 type FetchOptions = {
-  [key:string] : any
+  [key: string]: any
 }
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
-type TypeGardevoirConfig = { 
-  [key: string]: (FetchOptions?: FetchOptions, SwrOptions? : SWRConfiguration) => GardevoirReturnOptions 
+type TypeGardevoirConfig = {
+  [key: string]: (FetchOptions?: FetchOptions, SwrOptions?: SWRConfiguration) => GardevoirReturnOptions
 }
 
 export default function GardevoirInitialize<T extends TypeGardevoirConfig>(GardevoirConfig: T) {
@@ -27,7 +27,11 @@ export default function GardevoirInitialize<T extends TypeGardevoirConfig>(Garde
     (apiName: keyof T, QueryOptions: QueryOptions) => {
       const swrConfigFn = GardevoirConfig?.[apiName]
       if (typeof swrConfigFn === 'function') {
-        const { url, ...rest } = swrConfigFn(QueryOptions)
+        let FetchOptions = {}
+        let SwrOptions = {}
+        if (QueryOptions?.FetchOptions) FetchOptions = QueryOptions.FetchOptions
+        if (QueryOptions?.SwrOptions) SwrOptions = QueryOptions.SwrOptions
+        const { url, ...rest } = swrConfigFn(FetchOptions, SwrOptions)
         // eslint-disable-next-line react-hooks/rules-of-hooks
         return useSWR(url, fetcher, rest)
       }
