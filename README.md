@@ -53,4 +53,4 @@ export default useGardevoir;
 ```
 
 
-Both FetchOptions and SwrOptions are optional, SwrOptions retrieve the types from SwrConfiguration and you'll receive the name of keys from the config file as api.
+Both **FetchOptions** and **SwrOptions** are optional, **SwrOptions** retrieve the types from **SwrConfiguration**.
