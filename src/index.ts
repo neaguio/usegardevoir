@@ -1,5 +1,4 @@
-import initializeGardevoir from './components/Gardevoir'
-import type { GardevoirReturnOptions } from './components/Gardevoir'
-
-export default initializeGardevoir
+import useGardevoir from './components/useGardevoir'
+import type { GardevoirReturnOptions } from './components/useGardevoir'
+export default useGardevoir
 export { GardevoirReturnOptions }
